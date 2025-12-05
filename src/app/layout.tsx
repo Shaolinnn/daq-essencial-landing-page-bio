@@ -227,6 +227,46 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             })();
           `}
         </Script>
+
+        {/* 4) VTurb - otimização de carregamento (player mais rápido) */}
+        <Script id="vturb-plt" strategy="beforeInteractive">
+          {`!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);`}
+        </Script>
+
+        {/* Preloads e DNS Prefetch do VTurb */}
+        <link
+          rel="preload"
+          href="https://scripts.converteai.net/6386c5ef-c435-4ceb-bd05-bafd8dff4a4e/players/69332e10f25b44da4d794b4d/v4/player.js"
+          as="script"
+        />
+        <link
+          rel="preload"
+          href="https://scripts.converteai.net/lib/js/smartplayer-wc/v4/smartplayer.js"
+          as="script"
+        />
+        <link
+          rel="preload"
+          href="https://cdn.converteai.net/6386c5ef-c435-4ceb-bd05-bafd8dff4a4e/69332df977723b2a72ccd0c7/main.m3u8"
+          as="fetch"
+        />
+        <link rel="dns-prefetch" href="https://cdn.converteai.net" />
+        <link rel="dns-prefetch" href="https://scripts.converteai.net" />
+        <link rel="dns-prefetch" href="https://images.converteai.net" />
+        <link rel="dns-prefetch" href="https://api.vturb.com.br" />
+
+        {/* 5) VTurb - carrega o player.js */}
+        <Script id="vturb-player-loader" strategy="afterInteractive">
+          {`
+            (function() {
+              try {
+                var s = document.createElement("script");
+                s.src = "https://scripts.converteai.net/6386c5ef-c435-4ceb-bd05-bafd8dff4a4e/players/69332e10f25b44da4d794b4d/v4/player.js";
+                s.async = true;
+                document.head.appendChild(s);
+              } catch(e) {}
+            })();
+          `}
+        </Script>
       </body>
     </html>
   );

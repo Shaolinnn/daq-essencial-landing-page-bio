@@ -153,20 +153,14 @@ export default function HomePage() {
           </p>
 
           <div className="flex justify-center">
-            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md rounded-3xl shadow-2xl overflow-hidden border border-slate-700 bg-black">
-              {/* Placeholder em formato de vídeo vertical (9:16) */}
-              <div className="relative w-full" style={{ paddingTop: '177.78%' }}>
-                <video
-                  className="absolute inset-0 h-full w-full object-cover"
-                  controls
-                  playsInline
-                  poster="/img/vsl-daq-placeholder.webp"
-                >
-                  {/* Substitua o src assim que a VSL final estiver pronta */}
-                  <source src="/videos/vsl-daq-essencial.mp4" type="video/mp4" />
-                  Seu navegador não suporta o elemento de vídeo.
-                </video>
-              </div>
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md rounded-3xl shadow-2xl overflow-hidden border border-slate-700 bg-black py-4 px-2">
+              {/* VTurb SmartPlayer embed */}
+              <div
+                dangerouslySetInnerHTML={{
+                  __html:
+                    '<vturb-smartplayer id="vid-69332e10f25b44da4d794b4d" style="display: block; margin: 0 auto; width: 100%; max-width: 400px;"></vturb-smartplayer>',
+                }}
+              />
             </div>
           </div>
 
