@@ -48,18 +48,24 @@ export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
 
+  const scrollToVSL = () => {
+    const element = document.getElementById('vsl');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <main>
       {/* Seção Header */}
       <header className="relative bg-gradient-to-b from-white to-slate-50 py-14 md:py-20 overflow-hidden">
         <div className="absolute inset-0 hero-background-image bg-cover bg-center opacity-5" />
 
-        <div className="relative max-w-7xl mx-auto px-6 lg:flex items-center gap-12">
-          {/* COLUNA TEXTO */}
-          <div className="lg:w-1/2">
-            <span className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-amber-600 uppercase tracking-[0.18em] mb-4">
+        <div className="relative max-w-7xl mx-auto px-6">
+          <div className="w-full max-w-3xl mx-auto text-center">
+            <span className="inline-flex items-center justify-center gap-2 text-[0.68rem] sm:text-xs md:text-sm font-semibold text-amber-600 uppercase tracking-[0.18em] mb-4">
               <FontAwesomeIcon icon={faStar} className="text-[10px]" />
-              DAQ ESSENCIAL
+              DAQ ESSENCIAL • APRESENTAÇÃO GRATUITA
             </span>
 
             <h1
@@ -67,84 +73,113 @@ export default function HomePage() {
                 text-3xl sm:text-4xl lg:text-[3rem]
                 font-bold text-slate-900
                 leading-tight tracking-tight
-                max-w-2xl
               "
             >
-              <span className="block">O Caminho Para Quebrar</span>
+              <span className="block">Você não reprova por falta de esforço.</span>
 
               <span className="block mt-1">
-                Seu{' '}
+                Reprova porque ainda está preso em um{' '}
                 <span className="inline-block rounded-md bg-amber-50 px-2 py-1 text-emerald-700">
-                  Ciclo de Reprovações
+                  ciclo de reprovações
                 </span>
+                .
               </span>
 
               <span className="block mt-2">
-                E Finalmente Conquistar Sua Aprovação em{' '}
+                Nesta apresentação, a Kyrlla te mostra como estudar com lógica de banca
+                e ficar competitivo em{' '}
                 <span className="inline-flex items-center rounded-md bg-emerald-600 px-3 py-1 text-white shadow-sm">
-                  1 Ano
+                  1 ano
                 </span>
                 .
               </span>
             </h1>
 
-            <p className="mt-6 text-base sm:text-lg text-slate-600 max-w-xl">
-              Um método simples, baseado em questões, neurociência e clareza mental, para estudar sem
-              caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
+            <p className="mt-6 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+              Se você já coleciona PDFs, horas de estudo e simulados, mas sua porcentagem de acertos
+              continua baixa, assista primeiro à apresentação abaixo antes de pensar em desistir
+              ou comprar mais um cursinho.
             </p>
 
-            <div className="mt-10 flex items-center gap-4 flex-wrap">
-              <span className="text-xs sm:text-sm text-slate-500">
-                Aprovado em bancas como:
-              </span>
-              <div className="flex gap-6 items-center opacity-80">
-                <Image
-                  src="/img/FGV.webp"
-                  alt="FGV"
-                  width={80}
-                  height={24}
-                  className="h-6 w-auto"
-                />
-                <Image
-                  src="/img/cespe.webp"
-                  alt="Cespe"
-                  width={90}
-                  height={24}
-                  className="h-6 w-auto"
-                />
-                <Image
-                  src="/img/fcc-1.webp"
-                  alt="FCC"
-                  width={50}
-                  height={24}
-                  className="h-6 w-auto"
-                />
-              </div>
-            </div>
-          </div>
+            <div className="mt-8 flex flex-col items-center gap-4">
+              <button
+                onClick={scrollToVSL}
+                className="inline-flex items-center justify-center rounded-full bg-emerald-600 px-8 py-3 text-sm sm:text-base font-semibold text-white shadow-lg shadow-emerald-500/40 transition-transform hover:-translate-y-0.5 hover:bg-emerald-500"
+              >
+                Quero assistir à apresentação gratuita da Kyrlla
+              </button>
 
-          {/* COLUNA IMAGEM */}
-          <div className="mt-10 lg:mt-0 lg:w-1/2 relative">
-            <div className="relative max-w-xl ml-auto">
-              <div className="absolute -inset-6 bg-amber-100/40 blur-3xl rounded-[2.5rem] -z-10" />
-              <Image
-                className="w-full rounded-2xl shadow-2xl border-4 border-white object-cover"
-                src="/img/Aluno-estudando.webp"
-                width={1280}
-                height={853}
-                alt="Estudo por questões"
-                priority
-              />
-              <div className="absolute -bottom-4 right-6">
-                <span className="inline-flex items-center gap-2 bg-amber-500 text-white text-xs sm:text-sm font-semibold py-2 px-4 rounded-full shadow-lg">
-                  <span className="inline-block h-2 w-2 rounded-full bg-white animate-pulse" />
-                  Método comprovado na prática
-                </span>
+              <div className="flex flex-wrap items-center justify-center gap-4 text-xs sm:text-sm text-slate-500">
+                <span> Método testado em bancas como: </span>
+                <div className="flex gap-4 items-center opacity-80">
+                  <Image
+                    src="/img/FGV.webp"
+                    alt="FGV"
+                    width={80}
+                    height={24}
+                    className="h-6 w-auto"
+                  />
+                  <Image
+                    src="/img/cespe.webp"
+                    alt="Cespe"
+                    width={90}
+                    height={24}
+                    className="h-6 w-auto"
+                  />
+                  <Image
+                    src="/img/fcc-1.webp"
+                    alt="FCC"
+                    width={50}
+                    height={24}
+                    className="h-6 w-auto"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </header>
+
+      {/* Seção VSL para público frio */}
+      <section id="vsl" className="bg-slate-900 py-14">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+            Antes de tomar qualquer decisão, assista a esta apresentação
+          </h2>
+          <p className="text-slate-300 max-w-2xl mx-auto mb-8">
+            Em poucos minutos, a Kyrlla te mostra como funciona o Método SPQ na prática para quem
+            estuda para áreas Fiscal, Tribunais/Controle, Policial e Judiciária — sem promessas
+            mágicas, só o passo a passo que realmente muda sua porcentagem de acertos.
+          </p>
+
+          <div className="flex justify-center">
+            <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md rounded-3xl shadow-2xl overflow-hidden border border-slate-700 bg-black">
+              {/* Placeholder em formato de vídeo vertical (9:16) */}
+              <div className="relative w-full" style={{ paddingTop: '177.78%' }}>
+                <video
+                  className="absolute inset-0 h-full w-full object-cover"
+                  controls
+                  playsInline
+                  poster="/img/vsl-daq-placeholder.webp"
+                >
+                  {/* Substitua o src assim que a VSL final estiver pronta */}
+                  <source src="/videos/vsl-daq-essencial.mp4" type="video/mp4" />
+                  Seu navegador não suporta o elemento de vídeo.
+                </video>
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <button
+              onClick={openModal}
+              className="inline-flex items-center justify-center rounded-full px-8 py-3 text-sm sm:text-base font-semibold bg-emerald-400 hover:bg-emerald-300 text-slate-900 shadow-lg shadow-emerald-500/30 transition-transform hover:-translate-y-0.5"
+            >
+              Quero aplicar o Método SPQ depois da VSL
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* Seção Faixa de Destaque */}
       <section className="bg-amber-50 py-4 text-center text-sm font-medium text-amber-800 tracking-wide shine">
@@ -530,8 +565,8 @@ export default function HomePage() {
                   <p className="text-sm text-slate-600 mt-1">Desconto exclusivo para assinatura, renovação ou upgrade.</p>
                 </div>
 
-                 {/* Bônus 2: Comunidade */}
-                 <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
+                {/* Bônus 2: Comunidade */}
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-slate-100">
                   <h5 className="font-semibold text-slate-800 flex items-center gap-2">
                     <FontAwesomeIcon icon={faUsers} className="text-amber-500" /> Comunidade Exclusiva de Alunos
                   </h5>
