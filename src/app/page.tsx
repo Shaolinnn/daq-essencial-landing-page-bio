@@ -51,20 +51,22 @@ export default function HomePage() {
     // 1. Verifica se já existe a flag no LocalStorage
     const alreadyUnlocked = localStorage.getItem('daq_vsl_unlocked');
 
-    // 2. Se o delay for 0 ou já estiver desbloqueado, mostra na hora
-    if (DELAY_IN_SECONDS === 270 || alreadyUnlocked === 'true') {
+    // 2. Se já estiver desbloqueado (usuário voltou depois), mostra na hora
+    if (alreadyUnlocked === 'true') {
       setShowContent(true);
       return;
     }
 
-    // 3. Caso contrário, inicia o timer
+    // 3. Se for a primeira vez, inicia o timer
     const timer = setTimeout(() => {
       setShowContent(true);
+      // Salva no navegador que esse usuário já assistiu
       localStorage.setItem('daq_vsl_unlocked', 'true');
     }, DELAY_IN_SECONDS * 1000);
 
+    // Limpa o timer se a pessoa fechar a página antes
     return () => clearTimeout(timer);
-  }, []);
+}, []);
 
   return (
     <main>
