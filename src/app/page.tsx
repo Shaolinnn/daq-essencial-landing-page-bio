@@ -46,13 +46,6 @@ export default function HomePage() {
 
   const openModal = () => setIsModalOpen(true);
 
-  const scrollToVSL = () => {
-    const element = document.getElementById('vsl');
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   // Lógica do Delay com Persistência
   useEffect(() => {
     // 1. Verifica se já existe a flag no LocalStorage
