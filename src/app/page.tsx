@@ -8,7 +8,7 @@ import Script from 'next/script';
 // --- CONFIGURAÇÃO DO DELAY (Em Segundos) ---
 // COLOQUE AQUI O TEMPO DO PITCH DE VENDAS
 // Exemplo: 10 minutos = 600 segundos
-const DELAY_IN_SECONDS = 270; // ⚠️ MUDE AQUI PARA O TEMPO DESEJADO
+const DELAY_IN_SECONDS = 270; 
 
 // Carregamento dinâmico
 const FaqSection = dynamic(() => import('@/components/FaqSection'));
@@ -35,9 +35,6 @@ import {
 
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
-
-// REMOVI O BLOCO "declare global" QUE ESTAVA CAUSANDO OS ERROS.
-// A solução correta está aplicada diretamente na linha do componente abaixo.
 
 export default function HomePage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -80,17 +77,28 @@ export default function HomePage() {
             Em poucos minutos, a Kyrlla te mostra como funciona o Método SPQ na prática...
           </p>
 
-          <div className="flex justify-center">
+          <div className="flex justify-center flex-col items-center">
             <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-[400px] rounded-3xl shadow-2xl overflow-hidden border border-slate-700 bg-black">
               
-              {/* CORREÇÃO DO ERRO DE TYPE E ESLINT AQUI: */}
+              {/* --- VÍDEO NOVO VTURB --- */}
               {/* @ts-expect-error - Web Component do VTurb sem tipagem oficial React */}
               <vturb-smartplayer
-                id="vid-69332e10f25b44da4d794b4d"
+                id="vid-6938722834c2b56109b0223b"
                 style={{ display: 'block', margin: '0 auto', width: '100%' }}
               />
 
             </div>
+
+             {/* --- GIF DE ÁUDIO CARREGANDO --- */}
+            <div className="mt-6">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img 
+                src="https://negociocomagentesdeia.com/wp-content/uploads/2025/06/load-gif.gif" 
+                alt="Carregando audio..." 
+                className="w-full max-w-[250px] sm:max-w-[300px] h-auto opacity-90"
+              />
+            </div>
+            
           </div>
 
           {/* Botão com Delay */}
@@ -107,10 +115,15 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Scripts VTurb */}
+      {/* --- OTIMIZAÇÃO DE PERFORMANCE VTURB --- */}
+      <Script id="vturb-optimization" strategy="afterInteractive">
+        {`!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);`}
+      </Script>
+
+      {/* --- SCRIPT DO NOVO VÍDEO --- */}
       <Script
         id="vturb-player-script"
-        src="https://scripts.converteai.net/6386c5ef-c435-4ceb-bd05-bafd8dff4a4e/players/69332e10f25b44da4d794b4d/v4/player.js"
+        src="https://scripts.converteai.net/6386c5ef-c435-4ceb-bd05-bafd8dff4a4e/players/6938722834c2b56109b0223b/v4/player.js"
         strategy="afterInteractive"
       />
 
