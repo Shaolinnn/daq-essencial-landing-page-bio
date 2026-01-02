@@ -27,7 +27,6 @@ export const metadata: Metadata = {
     follow: true,
   },
   // Mantém o referrer útil para atribuição sem quebrar privacidade
-  // (equivalente ao que você configurou no servidor)
   referrer: "origin-when-cross-origin",
 };
 
@@ -46,6 +45,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="pt-BR">
       <body>
+        {/* --- INÍCIO DA ADIÇÃO: UTMIFY --- */}
+        <Script
+          id="utmify-script"
+          src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+          strategy="afterInteractive"
+          data-utmify-prevent-subids
+        />
+        {/* --- FIM DA ADIÇÃO: UTMIFY --- */}
+
         {children}
 
         {/* Contentsquare – mapa de calor / UX */}
