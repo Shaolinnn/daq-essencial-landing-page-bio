@@ -20,7 +20,23 @@ const testimonialsData: Testimonial[] = [
   // BLOCO 1: TEMPO / RESULTADO RÁPIDO (A PROVA DE QUE O MÉTODO FUNCIONA)
   // ----------------------------------------------------------------------
 
-  // 1) 7 dias de método (Resultado Imediato)
+  // [NOVO] 1) Depoimento da Dashboard (91% em 7 dias)
+  {
+    image: '/img/depoimento_12.jpg',
+    text: (
+      <>
+        “7 dias testando o DAQ. Sensação de que <strong>VAI DAR CERTO!</strong>
+        <br />
+        Análise semanal finalizada: <strong>914 questões resolvidas com 91.47% de acertos.</strong>
+        <br />
+        Meta até próximo domingo é 1.500 questões!”
+      </>
+    ),
+    author: 'Aluno DAQ',
+    role: '91% de acerto em 1 semana',
+  },
+
+  // 2) 7 dias de método (Resultado Imediato)
   {
     image: '/img/depoimento_8.webp',
     text: (
@@ -34,7 +50,7 @@ const testimonialsData: Testimonial[] = [
     role: 'Resultados em 7 dias',
   },
 
-  // 2) Gabriel (Consistência e Metraca - 1 ano)
+  // 3) Gabriel (Consistência e Metraca - 1 ano)
   {
     image: '/img/depoimento_11.jpg',
     text: (
@@ -53,7 +69,7 @@ const testimonialsData: Testimonial[] = [
   // BLOCO 2: PESSOAS SEM TEMPO / ROTINA DIFÍCIL (MATAR OBJEÇÃO DE TEMPO)
   // ----------------------------------------------------------------------
 
-  // 3) Andressa (Mãe de duas crianças - Sem tempo) -> MOVIDA PARA CÁ CONFORME PEDIDO
+  // 4) Andressa (Mãe de duas crianças - Sem tempo)
   {
     image: '/img/depoimento_10.jpg',
     text: (
@@ -72,8 +88,8 @@ const testimonialsData: Testimonial[] = [
     author: 'Andressa',
     role: 'Mãe de duas crianças — rotina mais leve',
   },
-
-  // 4) Lucas (Aprovado em < 10 meses com trabalho + faculdade + esporte)
+  
+  // 5) Lucas (Aprovado em < 10 meses com trabalho + faculdade + esporte)
   {
     image: '/img/video-lucas.jpg', 
     text: '“Apliquei o método SPQ com o DAQ Essencial e fui aprovado em menos de 10 meses, mesmo com faculdade, trabalho, estágio e treino de maratona.”',
@@ -81,15 +97,15 @@ const testimonialsData: Testimonial[] = [
     role: 'Aprovado GCM Poços de Caldas/MG',
   },
 
-  // 5) Fernanda Sodero (Evolução rápida / Otimização de tempo)
+  // 6) Fernanda Sodero (Evolução rápida / Otimização de tempo)
   {
     image: '/img/Depoimento_3.webp',
     text: 'Ganhei 1 ano em 1 mês! Estou amando o método e indico demais o DAQ Essencial.',
     author: 'Fernanda Sodero',
     role: 'Evolução rápida',
   },
-
-   // 6) Aluno TRE-RJ (Rotina adaptada - 80% aplicado)
+  
+   // 7) Aluno TRE-RJ (Rotina adaptada - 80% aplicado)
    {
     image: '/img/depoimento_5.webp',
     text: 'Não consegui aplicar o método 100% na rotina, mas uns 80% eu apliquei. E deu certo. Deus me deu essa aprovação através do estudo por questões!',
@@ -101,7 +117,7 @@ const testimonialsData: Testimonial[] = [
   // BLOCO 3: DEMAIS (APROVAÇÕES, NOTAS ALTAS E METODOLOGIA)
   // ----------------------------------------------------------------------
 
-  // 7) Aprovado CNU
+  // 8) Aprovado CNU
   {
     image: '/img/depoimento_1.webp',
     text: 'Não participo dos encontros presenciais e, ainda assim, consegui nota para 12 órgãos. Estou aguardando a nota da redação.',
@@ -109,7 +125,7 @@ const testimonialsData: Testimonial[] = [
     role: 'Aprovado CNU',
   },
 
-  // 8) Nota Alta (38 de 40)
+  // 9) Nota Alta (38 de 40)
   {
     image: '/img/depoimento_2.webp',
     text: 'Saiu o gabarito preliminar e acertei 38 de 40 questões — errei só 2. Nunca imaginei alcançar algo assim. O DAQ mudou minha forma de estudar.',
@@ -117,7 +133,7 @@ const testimonialsData: Testimonial[] = [
     role: 'Evolução evidente',
   },
 
-  // 9) Matemática (Superação de dificuldade)
+  // 10) Matemática (Superação de dificuldade)
   {
     image: '/img/depoimento_9.jpg',
     text: (
@@ -133,7 +149,7 @@ const testimonialsData: Testimonial[] = [
     role: 'Mais constância e avanço em Matemática',
   },
 
-  // 10) Pulo do Gato (Metodologia)
+  // 11) Pulo do Gato (Metodologia)
   {
     image: '/img/depoimento_7.webp',
     text: (
@@ -155,7 +171,7 @@ const testimonialsData: Testimonial[] = [
     role: 'Libertador sair dos PDFs e videoaulas',
   },
 
-  // 11) Virada de Chave (Conselho)
+  // 12) Virada de Chave (Conselho)
   {
     image: '/img/depoimento_6.webp',
     text: (
@@ -174,7 +190,7 @@ const testimonialsData: Testimonial[] = [
     role: 'Virada de chave com estudo por questões',
   },
 
-  // 12) Simplicidade
+  // 13) Simplicidade
   {
     image: '/img/depoimento_4.webp',
     text: 'Sem malabarismo mental, planilhas complexas ou cálculos de horas. O DAQ trouxe simplicidade e resultado como eu nunca tinha visto antes.',
@@ -212,6 +228,7 @@ export default function TestimonialsSection() {
                   src={testimonial.image}
                   alt={`Depoimento de ${testimonial.author}`}
                   fill
+                  // Otimização para Mobile (mantida conforme última correção)
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                   priority={index < 3}
