@@ -139,61 +139,80 @@ export default function InstaPage() {
         <TestimonialsSection />
         <VideoTestimonials />
 
-        {/* BIO MENTORA */}
-        <section className="py-16 bg-white relative overflow-hidden">
-            <div className="max-w-6xl mx-auto px-6 relative z-10">
-            <div className="flex flex-col md:flex-row items-center gap-12">
-                <div className="md:w-2/5 lg:w-1/3 text-center px-4">
-                <div className="relative inline-block transform rotate-1 hover:rotate-0 transition-transform duration-500">
-                    <Image
-                    src="/img/Kyrlla-2.webp"
-                    alt="Kyrlla Pattyelly"
-                    className="w-full max-w-md rounded-2xl shadow-2xl border-4 border-white"
-                    width={450}
-                    height={560}
-                    />
-                    <div className="absolute -bottom-4 -right-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg text-sm">
-                    <FontAwesomeIcon icon={faMedal} className="mr-1" /> Auditora Fiscal
-                    </div>
+        {/* Bio Mentora */}
+      <section className="py-16 bg-gradient-to-r from-amber-50 to-white">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row items-center gap-12">
+            
+            {/* Coluna da Imagem (Mantendo a configuração original que funciona) */}
+            <div className="md:w-2/5 lg:w-1/3 text-center px-4">
+              <div className="relative inline-block">
+                <Image
+                  src="/img/Kyrlla-2.webp"
+                  alt="Kyrlla Pattyelly"
+                  className="w-full max-w-md rounded-2xl shadow-xl border-4 border-white"
+                  width={450}
+                  height={560}
+                  style={{ minWidth: '280px' }}
+                />
+                <div className="absolute -bottom-4 -right-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg">
+                  <FontAwesomeIcon icon={faMedal} className="mr-1" /> Auditora Fiscal
                 </div>
-                </div>
-                
-                <div className="md:w-2/3">
-                    <span className="inline-block text-xs font-bold text-amber-600 uppercase tracking-widest mb-3 bg-amber-50 px-3 py-1 rounded">
-                        <FontAwesomeIcon icon={faUserGraduate} className="mr-1" /> Mentora & Criadora
-                    </span>
-                    <h2 className="text-3xl font-bold text-slate-900 mb-6 leading-tight">
-                        Meu nome é Kyrlla Pattyelly. Sou Auditora Fiscal e criei o <span className="text-amber-500">Método SPQ</span>.
-                    </h2>
-                    
-                    <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
-                        <p>
-                            Passei anos estudando do jeito errado, repetindo ciclos de reprovação e acumulando PDFs que não serviram
-                            para nada — até descobrir que o que aprova não é quantidade de horas, e sim o jeito de estudar.
-                        </p>
-                        <p>
-                            Transformei essa descoberta no SPQ, um método baseado em engenharia reversa de questões e neurociência.
-                        </p>
-                    </div>
+              </div>
+              <p className="mt-6 text-sm font-semibold text-slate-800">
+                Kyrlla Pattyelly — Auditora Fiscal e Criadora do Método SPQ
+              </p>
+            </div>
 
-                    <div className="mt-8 grid grid-cols-3 gap-4 border-t border-slate-100 pt-8">
-                        <div className="text-center">
-                            <div className="text-2xl font-bold text-amber-500">+5</div>
-                            <div className="text-xs text-slate-400 uppercase tracking-wide">Anos de XP</div>
-                        </div>
-                        <div className="text-center border-l border-slate-100">
-                            <div className="text-2xl font-bold text-amber-500">1k+</div>
-                            <div className="text-xs text-slate-400 uppercase tracking-wide">Alunos</div>
-                        </div>
-                        <div className="text-center border-l border-slate-100">
-                            <div className="text-2xl font-bold text-amber-500">100%</div>
-                            <div className="text-xs text-slate-400 uppercase tracking-wide">Focada</div>
-                        </div>
-                    </div>
+            {/* Coluna do Texto (Com a Copy Exata Atualizada) */}
+            <div className="md:w-2/3">
+              <span className="inline-block text-xs sm:text-sm font-semibold text-amber-600 uppercase tracking-widest mb-2">
+                <FontAwesomeIcon icon={faUserGraduate} className="mr-1" /> QUEM SOU EU
+              </span>
+              
+              <h2 className="text-3xl font-bold text-slate-900 mb-6 leading-tight">
+                Meu nome é <span className="text-amber-600">Kyrlla Pattyelly</span> e eu sou Auditora Fiscal e criadora do Método SPQ.
+              </h2>
+              
+              <div className="space-y-4 text-lg text-slate-700 leading-relaxed">
+                <p>
+                  Passei anos estudando do jeito errado, repetindo ciclos de reprovação e acumulando PDFs que não serviram para nada — até descobrir que o que aprova não é quantidade de horas, e sim o jeito de estudar.
+                </p>
+                <p>
+                  Nos últimos anos, transformei essa descoberta no SPQ, um método baseado em questões e princípios da neurociência do aprendizado, que já ajudou milhares de alunos a destravarem a mente, estudarem com clareza e avançarem de verdade.
+                </p>
+                <p>
+                  Pode ser diferente de tudo que você já ouviu por aí, mas funcionou para muita gente — e vai funcionar para você também.
+                </p>
+              </div>
+
+              {/* Citação em Destaque */}
+              <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-emerald-500 my-8">
+                <p className="text-slate-800 italic font-medium text-lg">
+                  “Você não reprova por falta de esforço. Reprova pelo método errado — e isso dá pra consertar.”
+                </p>
+              </div>
+
+              {/* Estatísticas */}
+              <div className="grid sm:grid-cols-3 gap-4 mt-6">
+                <div className="bg-white p-4 rounded-lg shadow-sm text-center border border-slate-100 hover:border-amber-200 transition-colors">
+                  <span className="block text-3xl font-bold text-amber-600">+5</span>
+                  <span className="text-xs sm:text-sm text-slate-600 font-semibold uppercase mt-1">anos transformando vidas</span>
                 </div>
+                <div className="bg-white p-4 rounded-lg shadow-sm text-center border border-slate-100 hover:border-amber-200 transition-colors">
+                  <span className="block text-3xl font-bold text-amber-600">1.000+</span>
+                  <span className="text-xs sm:text-sm text-slate-600 font-semibold uppercase mt-1">alunos mentorados</span>
+                </div>
+                <div className="bg-white p-4 rounded-lg shadow-sm text-center border border-slate-100 hover:border-amber-200 transition-colors">
+                  <span className="block text-3xl font-bold text-amber-600">100%</span>
+                  <span className="text-xs sm:text-sm text-slate-600 font-semibold uppercase mt-1">foco em aprovação</span>
+                </div>
+              </div>
+
             </div>
-            </div>
-        </section>
+          </div>
+        </div>
+      </section>
 
         {/* Seção Comparativa */}
         <section className="bg-slate-50 py-16">
@@ -224,11 +243,11 @@ export default function InstaPage() {
                     <ul className="space-y-4 relative z-10">
                         <li className="flex gap-3 text-slate-700 font-medium">
                             <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 shrink-0" />
-                            <span>Método de Engenharia Reversa (Estudo por Questões).</span>
+                            <span>Foco no que realmente cai na prova.</span>
                         </li>
                         <li className="flex gap-3 text-slate-700 font-medium">
                             <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 shrink-0" />
-                            <span>Gestão baseada em dados reais do seu desempenho.</span>
+                            <span>Adaptável à sua rotina.</span>
                         </li>
                     </ul>
                 </div>
@@ -246,10 +265,10 @@ export default function InstaPage() {
                 </div>
                 <div className="grid md:grid-cols-4 gap-6">
                     {[
-                    { title: 'Análise do Edital', desc: 'Identifique o que cai de verdade (Pareto 80/20).' },
-                    { title: 'Filtro de Questões', desc: 'Aprenda a selecionar apenas o ouro no TEC.' },
-                    { title: 'Estudo Reverso', desc: 'A teoria vem como consequência da prática.' },
-                    { title: 'Revisão Ativa', desc: 'Nunca mais esqueça o que estudou semana passada.' },
+                    { title: 'Análise do Edital', desc: 'Identifique os tópicos que realmente importam.' },
+                    { title: 'Filtro de Questões', desc: 'Filtre as questões mais relevantes.' },
+                    { title: 'Estudo Reverso', desc: 'Aprenda estudando questões.' },
+                    { title: 'Revisão Ativa', desc: 'Consolide o conhecimento.' },
                     ].map((item, idx) => (
                     <div key={idx} className="bg-slate-50 p-6 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 border border-slate-100 group">
                         <span className="text-4xl font-black text-slate-200 group-hover:text-amber-500 transition-colors block mb-4">0{idx + 1}</span>
@@ -288,7 +307,7 @@ export default function InstaPage() {
                         <FontAwesomeIcon icon={faPlayCircle} className="text-emerald-400 text-3xl mb-4" />
                         <h3 className="font-bold mb-2">Na Prática</h3>
                         {/* AQUI ESTAVA O ERRO DE ASPAS, CORRIGIDO ABAIXO */}
-                        <p className="text-sm text-slate-300">Aulas &quot;over the shoulder&quot; mostrando a tela.</p>
+                        <p className="text-sm text-slate-300">Aulas práticas, mostrando a tela.</p>
                     </div>
                 </div>
             </div>
