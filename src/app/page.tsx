@@ -6,9 +6,10 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import Script from 'next/script';
+import { useSearchParams } from 'next/navigation';
 
-// --- CONFIGURAÇÃO DA VSL ---
-const DELAY_IN_SECONDS = 0; // Tempo em segundos para liberar o conteúdo
+// --- CONFIGURAÇÃO PÚBLICO FRIO (REGRA DA KYRLLA) ---
+const DELAY_IN_SECONDS = 1013; // 16:53 conforme orientação da mentora
 
 // Carregamento dinâmico dos componentes pesados
 const FaqSection = dynamic(() => import('@/components/FaqSection'));
@@ -35,7 +36,8 @@ import {
   faFire,
   faCheck,
   faUserGraduate,
-  faClock
+  faClock,
+  faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import { faWhatsapp, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
 
@@ -45,20 +47,16 @@ export default function HomePage() {
 
   const openModal = () => setIsModalOpen(true);
 
-  // Lógica de Delay
+  // Lógica de Delay para Público Frio
   useEffect(() => {
-    if (DELAY_IN_SECONDS === 0) {
-      setShowContent(true);
-      return;
-    }
-    const alreadyUnlocked = localStorage.getItem('daq_vsl_unlocked');
+    const alreadyUnlocked = localStorage.getItem('daq_vsl_frio_unlocked');
     if (alreadyUnlocked === 'true') {
       setShowContent(true);
       return;
     }
     const timer = setTimeout(() => {
       setShowContent(true);
-      localStorage.setItem('daq_vsl_unlocked', 'true');
+      localStorage.setItem('daq_vsl_frio_unlocked', 'true');
     }, DELAY_IN_SECONDS * 1000);
 
     return () => clearTimeout(timer);
@@ -89,12 +87,10 @@ export default function HomePage() {
 
         <div className="relative max-w-5xl mx-auto px-6 flex flex-col items-center text-center">
           
-            {/* Badge */}
             <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold text-amber-600 uppercase tracking-[0.2em] mb-6 bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
               <FontAwesomeIcon icon={faFire} /> Método SPQ
             </span>
 
-            {/* Headline */}
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight mb-6 max-w-4xl">
               Aprenda com a{' '}
               <span className="text-amber-500 relative whitespace-nowrap">
@@ -107,27 +103,27 @@ export default function HomePage() {
             </h1>
 
             <p className="text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed mb-8">
-              Assista ao vídeo curto abaixo e descubra como estudar sem caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
+              Assista ao vídeo abaixo e descubra como estudar sem caos, aprender de verdade e parar de repetir o mesmo ciclo todos os anos.
             </p>
             
-            {/* --- PLAYER VSL (VERTICAL) --- */}
+            {/* --- PLAYER VSL NOVO (ID PÚBLICO FRIO) --- */}
             <div className="w-full max-w-[320px] sm:max-w-[380px] aspect-[9/16] bg-black rounded-2xl shadow-2xl overflow-hidden border-4 border-white mb-8 relative group mx-auto">
-                {/* @ts-expect-error - Web Component do VTurb */}
+                {/* @ts-expect-error - Web Component do VTurb não tipado no TS */}
                 <vturb-smartplayer
-                  id="vid-695a7250d93b099584986bea"
+                  id="vid-6967733435a1be1be44d18e8"
                   style={{ display: 'block', margin: '0 auto', width: '100%', height: '100%' }}
                 />
             </div>
 
-            {/* CTA DO HERO */}
+            {/* CTA DINÂMICO APÓS O PITCH NO MINUTO 16:53 */}
             {showContent && (
                 <div className="animate-fade-in-up">
                     <button
-                    onClick={openModal}
-                    className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg"
+                      onClick={openModal}
+                      className="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-10 rounded-xl shadow-lg shadow-emerald-500/30 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-lg"
                     >
-                    <FontAwesomeIcon icon={faTrophy} />
-                    Quero garantir minha vaga
+                      <FontAwesomeIcon icon={faTrophy} />
+                      Quero garantir minha vaga
                     </button>
                     <p className="mt-4 text-xs text-slate-400">
                         <FontAwesomeIcon icon={faShieldAlt} className="mr-1 text-emerald-500"/> Garantia de 7 dias incondicional
@@ -137,31 +133,26 @@ export default function HomePage() {
         </div>
       </header>
 
-      {/* SCRIPTS VTURB */}
-      <Script id="vturb-optimization" strategy="afterInteractive">
-        {`!function(i,n){i._plt=i._plt||(n&&n.timeOrigin?n.timeOrigin+n.now():Date.now())}(window,performance);`}
-      </Script>
-      <Script
-        id="vturb-player-script"
-        src="https://scripts.converteai.net/6386c5ef-c435-4ceb-bd05-bafd8dff4a4e/players/695a7250d93b099584986bea/v4/player.js"
-        strategy="afterInteractive"
-      />
-
-      {/* Faixa */}
-      <section className="bg-amber-50 py-4 text-center text-xs sm:text-sm font-medium text-amber-800 tracking-wide shine px-4 border-y border-amber-100">
-        <div className="max-w-4xl mx-auto relative z-20">
-          <FontAwesomeIcon icon={faBolt} className="mr-2" /> 
-          SEM PDF • SEM VIDEOAULA INFINITA • SEM TEORIA QUE VOCÊ NÃO USA
+      {/* --- DIVISÃO COM SETA (INDICADOR DE ROLAGEM) --- */}
+      {/* Esta seção cria o efeito visual da imagem que você mandou: uma setinha vazada sobrepondo a seção de baixo */}
+      <div className="relative h-4 w-full bg-slate-50 flex justify-center z-30">
+        <div className="absolute -top-5 w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center border border-slate-100 transition-transform hover:scale-110">
+          <FontAwesomeIcon icon={faChevronDown} className="text-amber-500 animate-bounce text-sm" />
         </div>
-      </section>
+      </div>
 
-      {/* RESTANTE DO CONTEÚDO */}
-      <div className={showContent ? 'animate-fade-in block' : 'hidden'}>
-        
+      <div className={showContent ? 'block' : 'hidden'}>
+        <section className="bg-amber-50 py-4 text-center text-xs sm:text-sm font-medium text-amber-800 tracking-wide shine px-4 border-y border-amber-100">
+          <div className="max-w-4xl mx-auto relative z-20">
+            <FontAwesomeIcon icon={faBolt} className="mr-2" /> 
+            SEM PDF • SEM VIDEOAULA INFINITA • SEM TEORIA QUE VOCÊ NÃO USA
+          </div>
+        </section>
+
         <TestimonialsSection />
         <VideoTestimonials />
 
-        {/* BIO MENTORA (TEXTO LONGO RESTAURADO) */}
+        {/* BIO MENTORA */}
         <section className="py-16 bg-gradient-to-r from-amber-50 to-white">
             <div className="max-w-6xl mx-auto px-6">
             <div className="flex flex-col md:flex-row items-center gap-12">
@@ -262,7 +253,7 @@ export default function HomePage() {
             </div>
         </section>
 
-        {/* COMO FUNCIONA (COPY RESTAURADA) */}
+        {/* COMO FUNCIONA */}
         <section className="bg-slate-50 py-16">
             <div className="max-w-6xl mx-auto px-6 text-center">
             <h2 className="text-3xl font-bold text-slate-900 mb-12">
@@ -316,56 +307,10 @@ export default function HomePage() {
             </div>
         </section>
 
-        {/* Pra Quem é */}
-        <section className="py-16 bg-gradient-to-r from-amber-50 to-orange-50">
-            <div className="max-w-5xl mx-auto px-6">
-            <div className="text-center mb-12">
-                <h2 className="text-2xl sm:text-3xl font-bold text-amber-600 mb-2">
-                <FontAwesomeIcon icon={faFire} className="mr-2" /> Pra quem é o DAQ Essencial?
-                </h2>
-                <p className="text-slate-700 max-w-2xl mx-auto text-sm sm:text-base">
-                Se você se identifica com algum desses pontos, o método foi feito para você
-                </p>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6 mb-10">
-                <ul className="space-y-4">
-                <li className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                    <span className="text-amber-500 text-xl mt-1"><FontAwesomeIcon icon={faCheck} /></span>
-                    <span className="text-slate-700">Pra quem estuda há anos e continua travado</span>
-                </li>
-                <li className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                    <span className="text-amber-500 text-xl mt-1"><FontAwesomeIcon icon={faCheck} /></span>
-                    <span className="text-slate-700">Pra quem acerta pouco mesmo estudando muito</span>
-                </li>
-                </ul>
-                <ul className="space-y-4">
-                <li className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                    <span className="text-amber-500 text-xl mt-1"><FontAwesomeIcon icon={faCheck} /></span>
-                    <span className="text-slate-700">Pra quem já entendeu que o problema não é o concurso: é o método</span>
-                </li>
-                <li className="flex items-start gap-3 bg-white p-4 rounded-lg shadow-sm">
-                    <span className="text-amber-500 text-xl mt-1"><FontAwesomeIcon icon={faCheck} /></span>
-                    <span className="text-slate-700">Pra quem quer estudar com raciocínio, não com decoreba</span>
-                </li>
-                </ul>
-            </div>
-            
-            <div className="text-center">
-                <button
-                onClick={openModal}
-                className="inline-flex items-center justify-center bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-full shadow-lg transition-transform hover:-translate-y-1 hover:shadow-xl group"
-                >
-                <FontAwesomeIcon icon={faCheck} className="mr-2 group-hover:scale-110 transition-transform" />
-                Me identifiquei! Quero começar agora 
-                </button>
-            </div>
-            </div>
-        </section>
-
         {/* FAQ - PARTE 1: Método */}
         <FaqSection variant="metodo" />
 
-        {/* Checkout */}
+        {/* Checkout - Oferta R$ 297 */}
         <section id="checkout" className="py-16 bg-emerald-50">
             <div className="max-w-4xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -457,7 +402,7 @@ export default function HomePage() {
         <footer className="py-8 bg-slate-900 text-slate-400">
             <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
             <p className="text-sm">
-                <FontAwesomeIcon icon={faCopyright} className="mr-1" /> 2025 DAQ Essencial.
+                <FontAwesomeIcon icon={faCopyright} className="mr-1" /> 2026 DAQ Essencial.
             </p>
             <div className="flex gap-4 mt-4 md:mt-0">
                 <FontAwesomeIcon icon={faInstagram} className="text-xl hover:text-amber-500 cursor-pointer" />
@@ -468,6 +413,13 @@ export default function HomePage() {
         </footer>
 
       </div>
+
+      {/* Script do Player VTurb Específico */}
+      <Script
+        id="vturb-player-script"
+        src="https://scripts.converteai.net/6386c5ef-c435-4ceb-bd05-bafd8dff4a4e/players/6967733435a1be1be44d18e8/v4/player.js"
+        strategy="afterInteractive"
+      />
 
       {isModalOpen && <FormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
     </main>

@@ -42,39 +42,39 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
     setIsLoading(true);
     setFeedback({ message: '', type: '' });
 
+    // Validação simples
     if (nome.length < 3 || !email.includes('@') || whatsapp.replace(/\D/g, '').length < 10) {
       setFeedback({ message: 'Por favor, preencha todos os campos corretamente.', type: 'erro' });
       setIsLoading(false);
       return;
     }
     
+    // Webhook para CRM (n8n)
     const webhookUrl = 'https://n8n.srv928140.hstgr.cloud/webhook/13c8579f-e98e-463c-839e-0795865e6dfa';
     
-    // --- ATENÇÃO SAULO: COLOQUE AQUI O SEU NOVO LINK DE CHECKOUT DE R$ 297 ---
-    // O parâmetro 'off' (offer code) deve ser o da oferta de R$ 297.
-    // O parâmetro '&name=' e '&email=' garantem que o checkout já abra preenchido.
-    const checkoutBaseUrl = 'https://pay.hotmart.com/K70495535U?off=SEU_CODIGO_NOVO_AQUI'; 
+    // --- LINK DE CHECKOUT ATUALIZADO (Oferta R$ 297) ---
+    // off=apdkfkwd conforme instrução da Kyrlla
+    const checkoutBaseUrl = 'https://pay.hotmart.com/K70495535U?off=apdkfkwd'; 
     
-    // Monta a URL final com os dados do lead
+    // Monta a URL final com os parâmetros para preenchimento automático (nome e email)
     const checkoutUrl = `${checkoutBaseUrl}&checkoutMode=10&bid=1756837455546&name=${encodeURIComponent(nome)}&email=${encodeURIComponent(email)}`;
 
     try {
       // 1. Envia dados para o n8n (CRM/Sheets)
+      // Usamos 'no-cors' ou tratamento de erro silencioso se necessário, mas aqui tentamos o POST padrão
       const response = await fetch(webhookUrl, {
         method: 'POST',
         body: JSON.stringify({ nome, email, whatsapp }),
         headers: { 'Content-Type': 'application/json' },
       });
 
-      if (response.ok) {
-        // 2. Redireciona para o Checkout
-        window.location.href = checkoutUrl;
-      } else {
-        throw new Error('Erro ao enviar os dados. Tente novamente.');
-      }
+      // Independente do status do webhook (200 ou erro), redirecionamos o cliente para não perder a venda.
+      // O 'await' acima garante que o dado foi disparado antes de sair da página.
+      window.location.href = checkoutUrl;
+
     } catch (error) {
-      console.error(error);
-      // Fallback: Se der erro no webhook, tenta redirecionar mesmo assim para não perder a venda
+      console.error('Erro ao enviar webhook:', error);
+      // Fallback: Se der erro de rede no webhook, redireciona para o checkout imediatamente
       window.location.href = checkoutUrl;
     }
   };
@@ -82,44 +82,89 @@ export default function FormModal({ isOpen, onClose }: FormModalProps) {
   return (
     <div
       onClick={handleBackdropClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-70 transition-opacity"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm transition-opacity p-4"
     >
-      <div className="relative bg-white rounded-xl p-8 max-w-md w-full mx-4 shadow-2xl">
-        <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+      <div className="relative bg-white rounded-xl p-6 sm:p-8 max-w-md w-full shadow-2xl animate-fade-in-up">
+        <button 
+          onClick={onClose} 
+          className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 hover:rotate-90 transition-transform duration-300"
+          aria-label="Fechar modal"
+        >
           <FontAwesomeIcon icon={faTimes} className="text-2xl" />
         </button>
         
-        {/* Título Atualizado */}
-        <h3 className="text-2xl font-bold text-emerald-600 mb-2">Quero o DAQ Essencial</h3>
-        <p className="text-slate-600 mb-6">Preencha para garantir a oferta de R$ 297</p>
+        <div className="text-center mb-6">
+          <h3 className="text-2xl font-bold text-emerald-600 mb-2">Quero o DAQ Essencial</h3>
+          <p className="text-slate-600">Preencha seus dados para liberar a oferta de <strong>R$ 297</strong>.</p>
+        </div>
         
         <form onSubmit={handleSubmit} className="space-y-4">
           {feedback.message && (
-            <div className={`p-3 rounded-lg text-center ${feedback.type === 'erro' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`}>
+            <div className={`p-3 rounded-lg text-sm font-medium text-center ${feedback.type === 'erro' ? 'bg-rose-100 text-rose-700' : 'bg-emerald-100 text-emerald-700'}`}>
               {feedback.message}
             </div>
           )}
+          
           <div>
-            <label htmlFor="nome" className="block text-sm font-medium text-slate-700 mb-1">Nome Completo</label>
-            <input type="text" id="nome" name="nome" value={nome} onChange={(e) => setNome(e.target.value)} required className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="Seu nome completo" />
+            <label htmlFor="nome" className="block text-sm font-semibold text-slate-700 mb-1">Nome Completo</label>
+            <input 
+              type="text" 
+              id="nome" 
+              name="nome" 
+              value={nome} 
+              onChange={(e) => setNome(e.target.value)} 
+              required 
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all" 
+              placeholder="Digite seu nome completo" 
+            />
           </div>
+          
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-slate-700 mb-1">E-mail</label>
-            <input type="email" id="email" name="email" value={email} onChange={(e) => setEmail(e.target.value)} required className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="seu@email.com" />
+            <label htmlFor="email" className="block text-sm font-semibold text-slate-700 mb-1">Melhor E-mail</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              value={email} 
+              onChange={(e) => setEmail(e.target.value)} 
+              required 
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all" 
+              placeholder="seu@email.com" 
+            />
           </div>
+          
           <div>
-            <label htmlFor="whatsapp" className="block text-sm font-medium text-slate-700 mb-1">WhatsApp</label>
-            <input type="tel" id="whatsapp" name="whatsapp" value={whatsapp} onChange={(e) => formatarTelefone(e.target.value)} required className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-transparent" placeholder="(99) 99999-9999" />
+            <label htmlFor="whatsapp" className="block text-sm font-semibold text-slate-700 mb-1">WhatsApp</label>
+            <input 
+              type="tel" 
+              id="whatsapp" 
+              name="whatsapp" 
+              value={whatsapp} 
+              onChange={(e) => formatarTelefone(e.target.value)} 
+              required 
+              className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg placeholder-slate-400 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none transition-all" 
+              placeholder="(99) 99999-9999" 
+            />
           </div>
-          <button type="submit" disabled={isLoading} className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-300 disabled:bg-slate-400 disabled:cursor-not-allowed">
-            {isLoading ? 'Redirecionando...' : (
+          
+          <button 
+            type="submit" 
+            disabled={isLoading} 
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 disabled:bg-slate-400 disabled:cursor-not-allowed transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/30 flex items-center justify-center gap-2"
+          >
+            {isLoading ? (
+              'Redirecionando...'
+            ) : (
               <>
-                <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
-                Quero garantir minha vaga
+                <FontAwesomeIcon icon={faPaperPlane} />
+                Ir para Pagamento Seguro
               </>
             )}
           </button>
-          <p className="text-xs text-slate-500 text-center">Ao informar meus dados, concordo com a <a href="#" className="text-emerald-600 hover:underline">Política de Privacidade</a>.</p>
+          
+          <p className="text-[10px] text-slate-400 text-center mt-2">
+            Seus dados estão seguros. Ao continuar, você concorda com nossos termos.
+          </p>
         </form>
       </div>
     </div>
