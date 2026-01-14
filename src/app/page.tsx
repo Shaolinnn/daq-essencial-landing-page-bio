@@ -333,7 +333,7 @@ export default function InstaPage() {
                         <div className="mb-6">
                             <p className="text-slate-400 text-sm line-through">de R$ 497,00</p>
                             <p className="text-lg text-emerald-600 font-bold">por apenas 12x de</p>
-                            <p className="text-5xl font-black text-emerald-600 tracking-tight font-sans">R$ 29,64</p>
+                            <p className="text-5xl font-black text-emerald-600 tracking-tight font-sans">R$ 30,72</p>
                             <p className="text-slate-500 text-sm mt-1">ou R$ 297 à vista</p>
                         </div>
                         
