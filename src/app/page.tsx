@@ -32,10 +32,12 @@ import { faWhatsapp, faInstagram, faYoutube } from '@fortawesome/free-brands-svg
 // Importa o Preloader Específico do Insta
 import VslPreloaderInsta from '@/components/VslPreloaderInsta';
 
+// --- CONFIGURAÇÃO INSTA / BIO ---
+// Delay 0 pois o público do Insta já conhece a autoridade da Kyrlla
+const DELAY_IN_SECONDS = 0; 
 
 // Carregamento Lazy
 const FaqSection = dynamic(() => import('@/components/FaqSection'), { ssr: false });
-// FormModal removido (Checkout Direto)
 const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'), { ssr: false });
 const VideoTestimonials = dynamic(() => import('@/components/VideoTestimonials'), { ssr: false });
 
@@ -64,7 +66,8 @@ export default function InstaPage() {
       </div>
 
       {/* --- HERO SECTION --- */}
-      <header className="relative bg-gradient-to-b from-white to-slate-50 pt-10 pb-20 md:pt-14 md:pb-24 overflow-visible">
+      {/* MUDANÇA: Reduzi o padding-top (pt-10 -> pt-4) para subir o conteúdo no mobile */}
+      <header className="relative bg-gradient-to-b from-white to-slate-50 pt-4 pb-20 md:pt-14 md:pb-24 overflow-visible">
         {/* Background */}
         <div className="absolute inset-0 -z-10 select-none opacity-5">
            <Image 
@@ -79,26 +82,24 @@ export default function InstaPage() {
         </div>
 
         <div className="relative max-w-4xl mx-auto px-6 flex flex-col items-center text-center z-10">
-            {/* Badge */}
-            <span className="inline-flex items-center gap-2 text-[10px] sm:text-xs font-bold text-amber-600 uppercase tracking-[0.2em] mb-6 bg-amber-50 px-4 py-1.5 rounded-full border border-amber-100 shadow-sm">
-              <FontAwesomeIcon icon={faFire} /> Método SPQ
-            </span>
+            
+            {/* MUDANÇA: Removi o Badge "Método SPQ" para ganhar espaço vertical */}
 
             {/* Headline */}
-            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight mb-8">
+            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight mb-4 md:mb-8">
               Aprenda com a <span className="text-amber-500">prova</span>, na prática.
             </h1>
 
-            {/* --- VSL PLAYER (VERSÃO INSTA - ID ESPECÍFICO) --- */}
+            {/* --- VSL PLAYER (VERSÃO INSTA - NOVO ID) --- */}
             <div className="w-full max-w-[340px] sm:max-w-[380px] aspect-[9/16] bg-black rounded-2xl shadow-2xl overflow-hidden border-4 border-white mb-6 relative mx-auto ring-1 ring-slate-200/50">
-                {/* @ts-expect-error - Web Component do VTurb não tipado no TS */}
+                {/* @ts-expect-error - Web Component do VTurb */}
                 <vturb-smartplayer
                   id="vid-696778c43565f9f404c72e14"
                   style={{ display: 'block', margin: '0 auto', width: '100%', height: '100%' }}
                 />
             </div>
 
-            {/* CTA IMEDIATO (Checkout Direto) */}
+            {/* CTA IMEDIATO (Sem delay para Insta) */}
             <div className="animate-fade-in-up flex flex-col items-center w-full">
                 <button
                     onClick={handleCheckout}
@@ -222,11 +223,11 @@ export default function InstaPage() {
                     <ul className="space-y-4 relative z-10">
                         <li className="flex gap-3 text-slate-700 font-medium">
                             <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 shrink-0" />
-                            <span>Método de Engenharia Reversa (Estudo por Questões).</span>
+                            <span>Foco no que realmente cai na prova.</span>
                         </li>
                         <li className="flex gap-3 text-slate-700 font-medium">
                             <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 shrink-0" />
-                            <span>Gestão baseada em dados reais do seu desempenho.</span>
+                            <span>Adaptável à sua rotina.</span>
                         </li>
                     </ul>
                 </div>
@@ -285,7 +286,7 @@ export default function InstaPage() {
                     <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-emerald-500/50 transition-colors">
                         <FontAwesomeIcon icon={faPlayCircle} className="text-emerald-400 text-3xl mb-4" />
                         <h3 className="font-bold mb-2">Na Prática</h3>
-                        <p className="text-sm text-slate-300">Aulas &quot;over the shoulder&quot; mostrando a tela.</p>
+                        <p className="text-sm text-slate-300">Aulas na prática, mostrando a tela.</p>
                     </div>
                 </div>
             </div>
@@ -311,7 +312,7 @@ export default function InstaPage() {
                         <div className="mb-6">
                             <p className="text-slate-400 text-sm line-through">de R$ 497,00</p>
                             <p className="text-lg text-emerald-600 font-bold">por apenas 12x de</p>
-                            <p className="text-5xl font-black text-emerald-600 tracking-tight font-sans">R$ 29,64</p>
+                            <p className="text-5xl font-black text-emerald-600 tracking-tight font-sans">R$ 30,72</p>
                             <p className="text-slate-500 text-sm mt-1">ou R$ 297 à vista</p>
                         </div>
                         
