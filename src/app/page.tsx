@@ -32,21 +32,20 @@ import { faWhatsapp, faInstagram, faYoutube } from '@fortawesome/free-brands-svg
 // Importa o Preloader Específico do Insta
 import VslPreloaderInsta from '@/components/VslPreloaderInsta';
 
-// --- CONFIGURAÇÃO INSTA / BIO ---
-// Delay 0 pois o público do Insta já conhece a autoridade da Kyrlla
-const DELAY_IN_SECONDS = 0; 
 
 // Carregamento Lazy
 const FaqSection = dynamic(() => import('@/components/FaqSection'), { ssr: false });
-const FormModal = dynamic(() => import('@/components/FormModal'), { ssr: false });
+// FormModal removido (Checkout Direto)
 const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSection'), { ssr: false });
 const VideoTestimonials = dynamic(() => import('@/components/VideoTestimonials'), { ssr: false });
 
 export default function InstaPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [showContent, setShowContent] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
+  // Função de Checkout Direto (Sem Pop-up)
+  const handleCheckout = () => {
+    window.location.href = 'https://pay.hotmart.com/K70495535U?off=apdkfkwd&checkoutMode=10';
+  };
 
   useEffect(() => {
     // Como o delay é 0, liberamos imediatamente
@@ -90,19 +89,19 @@ export default function InstaPage() {
               Aprenda com a <span className="text-amber-500">prova</span>, na prática.
             </h1>
 
-            {/* --- VSL PLAYER (VERSÃO INSTA - NOVO ID) --- */}
+            {/* --- VSL PLAYER (VERSÃO INSTA - ID ESPECÍFICO) --- */}
             <div className="w-full max-w-[340px] sm:max-w-[380px] aspect-[9/16] bg-black rounded-2xl shadow-2xl overflow-hidden border-4 border-white mb-6 relative mx-auto ring-1 ring-slate-200/50">
-                {/* @ts-expect-error - Web Component do VTurb */}
+                {/* @ts-expect-error - Web Component do VTurb não tipado no TS */}
                 <vturb-smartplayer
                   id="vid-696778c43565f9f404c72e14"
                   style={{ display: 'block', margin: '0 auto', width: '100%', height: '100%' }}
                 />
             </div>
 
-            {/* CTA IMEDIATO (Sem delay para Insta) */}
+            {/* CTA IMEDIATO (Checkout Direto) */}
             <div className="animate-fade-in-up flex flex-col items-center w-full">
                 <button
-                    onClick={openModal}
+                    onClick={handleCheckout}
                     className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-xl shadow-emerald-500/25 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-base sm:text-lg uppercase tracking-wide"
                 >
                     <FontAwesomeIcon icon={faTrophy} />
@@ -133,86 +132,66 @@ export default function InstaPage() {
             <span>SEM PDF • SEM VIDEOAULA INFINITA • SEM TEORIA INÚTIL</span>
           </div>
         </section>
-
-      </div>
+      </div>  
 
         <TestimonialsSection />
         <VideoTestimonials />
 
-        {/* Bio Mentora */}
-      <section className="py-16 bg-gradient-to-r from-amber-50 to-white">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="flex flex-col md:flex-row items-center gap-12">
-            
-            {/* Coluna da Imagem (Mantendo a configuração original que funciona) */}
-            <div className="md:w-2/5 lg:w-1/3 text-center px-4">
-              <div className="relative inline-block">
-                <Image
-                  src="/img/Kyrlla-2.webp"
-                  alt="Kyrlla Pattyelly"
-                  className="w-full max-w-md rounded-2xl shadow-xl border-4 border-white"
-                  width={450}
-                  height={560}
-                  style={{ minWidth: '280px' }}
-                />
-                <div className="absolute -bottom-4 -right-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg">
-                  <FontAwesomeIcon icon={faMedal} className="mr-1" /> Auditora Fiscal
+        {/* BIO MENTORA */}
+        <section className="py-16 bg-white relative overflow-hidden">
+            <div className="max-w-6xl mx-auto px-6 relative z-10">
+            <div className="flex flex-col md:flex-row items-center gap-12">
+                <div className="md:w-2/5 lg:w-1/3 text-center px-4">
+                <div className="relative inline-block transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                    <Image
+                    src="/img/Kyrlla-2.webp"
+                    alt="Kyrlla Pattyelly"
+                    className="w-full max-w-md rounded-2xl shadow-2xl border-4 border-white"
+                    width={450}
+                    height={560}
+                    />
+                    <div className="absolute -bottom-4 -right-4 bg-amber-500 text-white font-bold py-2 px-4 rounded-lg shadow-lg text-sm">
+                    <FontAwesomeIcon icon={faMedal} className="mr-1" /> Auditora Fiscal
+                    </div>
                 </div>
-              </div>
-              <p className="mt-6 text-sm font-semibold text-slate-800">
-                Kyrlla Pattyelly — Auditora Fiscal e Criadora do Método SPQ
-              </p>
+                </div>
+                
+                <div className="md:w-2/3">
+                    <span className="inline-block text-xs font-bold text-amber-600 uppercase tracking-widest mb-3 bg-amber-50 px-3 py-1 rounded">
+                        <FontAwesomeIcon icon={faUserGraduate} className="mr-1" /> Mentora & Criadora
+                    </span>
+                    <h2 className="text-3xl font-bold text-slate-900 mb-6 leading-tight">
+                        Meu nome é Kyrlla Pattyelly. Sou Auditora Fiscal e criei o <span className="text-amber-500">Método SPQ</span>.
+                    </h2>
+                    
+                    <div className="space-y-4 text-slate-600 text-lg leading-relaxed">
+                        <p>
+                            Passei anos estudando do jeito errado, repetindo ciclos de reprovação e acumulando PDFs que não serviram
+                            para nada — até descobrir que o que aprova não é quantidade de horas, e sim o jeito de estudar.
+                        </p>
+                        <p>
+                            Transformei essa descoberta no SPQ, um método baseado em engenharia reversa de questões e neurociência.
+                        </p>
+                    </div>
+
+                    <div className="mt-8 grid grid-cols-3 gap-4 border-t border-slate-100 pt-8">
+                        <div className="text-center">
+                            <div className="text-2xl font-bold text-amber-500">+5</div>
+                            <div className="text-xs text-slate-400 uppercase tracking-wide">Anos de XP</div>
+                        </div>
+                        <div className="text-center border-l border-slate-100">
+                            <div className="text-2xl font-bold text-amber-500">1k+</div>
+                            <div className="text-xs text-slate-400 uppercase tracking-wide">Alunos</div>
+                        </div>
+                        <div className="text-center border-l border-slate-100">
+                            <div className="text-2xl font-bold text-amber-500">100%</div>
+                            <div className="text-xs text-slate-400 uppercase tracking-wide">Focada</div>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            {/* Coluna do Texto (Com a Copy Exata Atualizada) */}
-            <div className="md:w-2/3">
-              <span className="inline-block text-xs sm:text-sm font-semibold text-amber-600 uppercase tracking-widest mb-2">
-                <FontAwesomeIcon icon={faUserGraduate} className="mr-1" /> QUEM SOU EU
-              </span>
-              
-              <h2 className="text-3xl font-bold text-slate-900 mb-6 leading-tight">
-                Meu nome é <span className="text-amber-600">Kyrlla Pattyelly</span> e eu sou Auditora Fiscal e criadora do Método SPQ.
-              </h2>
-              
-              <div className="space-y-4 text-lg text-slate-700 leading-relaxed">
-                <p>
-                  Passei anos estudando do jeito errado, repetindo ciclos de reprovação e acumulando PDFs que não serviram para nada — até descobrir que o que aprova não é quantidade de horas, e sim o jeito de estudar.
-                </p>
-                <p>
-                  Nos últimos anos, transformei essa descoberta no SPQ, um método baseado em questões e princípios da neurociência do aprendizado, que já ajudou milhares de alunos a destravarem a mente, estudarem com clareza e avançarem de verdade.
-                </p>
-                <p>
-                  Pode ser diferente de tudo que você já ouviu por aí, mas funcionou para muita gente — e vai funcionar para você também.
-                </p>
-              </div>
-
-              {/* Citação em Destaque */}
-              <div className="bg-white p-6 rounded-xl shadow-sm border-l-4 border-emerald-500 my-8">
-                <p className="text-slate-800 italic font-medium text-lg">
-                  “Você não reprova por falta de esforço. Reprova pelo método errado — e isso dá pra consertar.”
-                </p>
-              </div>
-
-              {/* Estatísticas */}
-              <div className="grid sm:grid-cols-3 gap-4 mt-6">
-                <div className="bg-white p-4 rounded-lg shadow-sm text-center border border-slate-100 hover:border-amber-200 transition-colors">
-                  <span className="block text-3xl font-bold text-amber-600">+5</span>
-                  <span className="text-xs sm:text-sm text-slate-600 font-semibold uppercase mt-1">anos transformando vidas</span>
-                </div>
-                <div className="bg-white p-4 rounded-lg shadow-sm text-center border border-slate-100 hover:border-amber-200 transition-colors">
-                  <span className="block text-3xl font-bold text-amber-600">1.000+</span>
-                  <span className="text-xs sm:text-sm text-slate-600 font-semibold uppercase mt-1">alunos mentorados</span>
-                </div>
-                <div className="bg-white p-4 rounded-lg shadow-sm text-center border border-slate-100 hover:border-amber-200 transition-colors">
-                  <span className="block text-3xl font-bold text-amber-600">100%</span>
-                  <span className="text-xs sm:text-sm text-slate-600 font-semibold uppercase mt-1">foco em aprovação</span>
-                </div>
-              </div>
-
             </div>
-          </div>
-        </div>
-      </section>
+        </section>
 
         {/* Seção Comparativa */}
         <section className="bg-slate-50 py-16">
@@ -243,11 +222,11 @@ export default function InstaPage() {
                     <ul className="space-y-4 relative z-10">
                         <li className="flex gap-3 text-slate-700 font-medium">
                             <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 shrink-0" />
-                            <span>Foco no que realmente cai na prova.</span>
+                            <span>Método de Engenharia Reversa (Estudo por Questões).</span>
                         </li>
                         <li className="flex gap-3 text-slate-700 font-medium">
                             <FontAwesomeIcon icon={faCheckCircle} className="text-emerald-500 mt-1 shrink-0" />
-                            <span>Adaptável à sua rotina.</span>
+                            <span>Gestão baseada em dados reais do seu desempenho.</span>
                         </li>
                     </ul>
                 </div>
@@ -265,10 +244,10 @@ export default function InstaPage() {
                 </div>
                 <div className="grid md:grid-cols-4 gap-6">
                     {[
-                    { title: 'Análise do Edital', desc: 'Identifique os tópicos que realmente importam.' },
-                    { title: 'Filtro de Questões', desc: 'Filtre as questões mais relevantes.' },
-                    { title: 'Estudo Reverso', desc: 'Aprenda estudando questões.' },
-                    { title: 'Revisão Ativa', desc: 'Consolide o conhecimento.' },
+                    { title: 'Análise do Edital', desc: 'Identifique o que cai de verdade (Pareto 80/20).' },
+                    { title: 'Filtro de Questões', desc: 'Aprenda a selecionar apenas o ouro no TEC.' },
+                    { title: 'Estudo Reverso', desc: 'A teoria vem como consequência da prática.' },
+                    { title: 'Revisão Ativa', desc: 'Nunca mais esqueça o que estudou semana passada.' },
                     ].map((item, idx) => (
                     <div key={idx} className="bg-slate-50 p-6 rounded-2xl hover:bg-white hover:shadow-xl transition-all duration-300 border border-slate-100 group">
                         <span className="text-4xl font-black text-slate-200 group-hover:text-amber-500 transition-colors block mb-4">0{idx + 1}</span>
@@ -280,7 +259,7 @@ export default function InstaPage() {
             </div>
         </section>
 
-        {/* Arsenal (CORREÇÃO DAS ASPAS AQUI) */}
+        {/* Arsenal */}
         <section className="py-16 bg-gradient-to-br from-slate-900 to-slate-800 text-white">
             <div className="max-w-6xl mx-auto px-6 text-center">
                 <h2 className="text-3xl font-bold mb-12">
@@ -306,8 +285,7 @@ export default function InstaPage() {
                     <div className="bg-white/5 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:border-emerald-500/50 transition-colors">
                         <FontAwesomeIcon icon={faPlayCircle} className="text-emerald-400 text-3xl mb-4" />
                         <h3 className="font-bold mb-2">Na Prática</h3>
-                        {/* AQUI ESTAVA O ERRO DE ASPAS, CORRIGIDO ABAIXO */}
-                        <p className="text-sm text-slate-300">Aulas práticas, mostrando a tela.</p>
+                        <p className="text-sm text-slate-300">Aulas &quot;over the shoulder&quot; mostrando a tela.</p>
                     </div>
                 </div>
             </div>
@@ -333,7 +311,7 @@ export default function InstaPage() {
                         <div className="mb-6">
                             <p className="text-slate-400 text-sm line-through">de R$ 497,00</p>
                             <p className="text-lg text-emerald-600 font-bold">por apenas 12x de</p>
-                            <p className="text-5xl font-black text-emerald-600 tracking-tight font-sans">R$ 30,72</p>
+                            <p className="text-5xl font-black text-emerald-600 tracking-tight font-sans">R$ 29,64</p>
                             <p className="text-slate-500 text-sm mt-1">ou R$ 297 à vista</p>
                         </div>
                         
@@ -345,7 +323,7 @@ export default function InstaPage() {
                         </div>
 
                         <button
-                            onClick={openModal}
+                            onClick={handleCheckout}
                             className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-6 rounded-xl shadow-lg shadow-emerald-500/20 transition-all text-lg flex items-center justify-center gap-2"
                         >
                             Quero Ser Aprovado
@@ -398,8 +376,6 @@ export default function InstaPage() {
         src="https://scripts.converteai.net/6386c5ef-c435-4ceb-bd05-bafd8dff4a4e/players/696778c43565f9f404c72e14/v4/player.js"
         strategy="lazyOnload" 
       />
-
-      {isModalOpen && <FormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
     </main>
   );
 }
