@@ -8,7 +8,6 @@ import dynamic from 'next/dynamic';
 import Script from 'next/script';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
-  faFire, 
   faTrophy, 
   faShieldAlt, 
   faChevronDown, 
@@ -34,6 +33,7 @@ import VslPreloaderInsta from '@/components/VslPreloaderInsta';
 
 // --- CONFIGURAÇÃO INSTA / BIO ---
 // Delay 0 pois o público do Insta já conhece a autoridade da Kyrlla
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const DELAY_IN_SECONDS = 0; 
 
 // Carregamento Lazy
@@ -42,6 +42,7 @@ const TestimonialsSection = dynamic(() => import('@/components/TestimonialsSecti
 const VideoTestimonials = dynamic(() => import('@/components/VideoTestimonials'), { ssr: false });
 
 export default function InstaPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showContent, setShowContent] = useState(false);
 
   // Função de Checkout Direto (Sem Pop-up)
@@ -59,15 +60,9 @@ export default function InstaPage() {
       {/* Performance específica para vídeo do Insta */}
       <VslPreloaderInsta />
 
-      {/* --- BARRA DE URGÊNCIA --- */}
-      <div className="bg-red-600 text-white py-2 px-4 text-center font-bold uppercase tracking-wider text-[10px] sm:text-xs shadow-md animate-pulse z-50">
-        <FontAwesomeIcon icon={faClock} className="mr-2" />
-        Oferta Especial para Seguidores — Acesso Imediato
-      </div>
-
       {/* --- HERO SECTION --- */}
-      {/* MUDANÇA: Reduzi o padding-top (pt-10 -> pt-4) para subir o conteúdo no mobile */}
-      <header className="relative bg-gradient-to-b from-white to-slate-50 pt-4 pb-20 md:pt-14 md:pb-24 overflow-visible">
+      {/* MUDANÇA: Padding ajustado para receber o player com headline embutida */}
+      <header className="relative bg-gradient-to-b from-white to-slate-50 pt-6 pb-12 md:pt-10 md:pb-16 overflow-visible">
         {/* Background */}
         <div className="absolute inset-0 -z-10 select-none opacity-5">
            <Image 
@@ -83,32 +78,23 @@ export default function InstaPage() {
 
         <div className="relative max-w-4xl mx-auto px-6 flex flex-col items-center text-center z-10">
             
-            {/* MUDANÇA: Removi o Badge "Método SPQ" para ganhar espaço vertical */}
+            {/* MUDANÇA: H1 removido. A headline agora vem de dentro do player do VTurb. */}
 
-            {/* Headline */}
-            <h1 className="text-2xl sm:text-3xl lg:text-5xl font-extrabold text-slate-900 leading-tight tracking-tight mb-4 md:mb-8">
-              Aprenda com a <span className="text-amber-500">prova</span>, na prática.
-            </h1>
-
-            {/* --- VSL PLAYER (VERSÃO INSTA - NOVO ID) --- */}
-            <div className="w-full max-w-[340px] sm:max-w-[380px] aspect-[9/16] bg-black rounded-2xl shadow-2xl overflow-hidden border-4 border-white mb-6 relative mx-auto ring-1 ring-slate-200/50">
+            {/* --- VSL PLAYER (VERSÃO INSTA - ID MANTIDO) --- */}
+            {/* MUDANÇA TÉCNICA: 
+                Container limpo (sem aspect-ratio fixo, sem overflow-hidden, sem bordas pesadas)
+                para permitir que a headline do VTurb expanda naturalmente.
+            */}
+            <div className="w-full max-w-[320px] sm:max-w-[380px] bg-transparent mb-6 relative group mx-auto">
                 {/* @ts-expect-error - Web Component do VTurb */}
                 <vturb-smartplayer
                   id="vid-696778c43565f9f404c72e14"
-                  style={{ display: 'block', margin: '0 auto', width: '100%', height: '100%' }}
+                  style={{ display: 'block', margin: '0 auto', width: '100%' }}
                 />
             </div>
 
             {/* CTA IMEDIATO (Sem delay para Insta) */}
             <div className="animate-fade-in-up flex flex-col items-center w-full">
-                <button
-                    onClick={handleCheckout}
-                    className="w-full sm:w-auto bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-xl shadow-emerald-500/25 transition-all transform hover:scale-105 flex items-center justify-center gap-2 text-base sm:text-lg uppercase tracking-wide"
-                >
-                    <FontAwesomeIcon icon={faTrophy} />
-                    Acesso Imediato e Vitalício
-                </button>
-                
                 <p className="mt-3 text-[10px] sm:text-xs text-slate-400 font-medium uppercase tracking-wider">
                     <FontAwesomeIcon icon={faShieldAlt} className="mr-1 text-emerald-500"/> Garantia de 7 dias
                 </p>
@@ -124,7 +110,7 @@ export default function InstaPage() {
       </header>
 
 
-      {/* --- CONTEÚDO RESTANTE --- */}
+      {/* --- CONTEÚDO RESTANTE (Mantido igual) --- */}
       <div className="block">
         
         <section className="bg-amber-50 py-6 text-center text-xs sm:text-sm font-bold text-amber-800 tracking-wide border-y border-amber-100/50 relative z-10">
